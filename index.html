@@ -16,20 +16,17 @@
         <div class="options">
             <div>
                 <span>What to replace:</span>
-                <select id="oldSepSelect" onchange="updateOrgiginalSeperator()">
-                    <option value="newline">New Line</option>
-                    <option value="comma">,</option>
-                    <option value="period">.</option>
-                </select>
+                <input type="text" id="oldSepSelect" onchange="updateOrgiginalSeperator()" placeholder="Leave empty for 'NewLine'"></input>
             </div>
         
             <div>
                 <span>What to replace with:</span>
-                <select id="newSepSelect" onchange="updateNewSeperator()">
-                    <option value="newline">New Line</option>
-                    <option value="comma">,</option>
-                    <option value="period">.</option>
-                </select>
+                <input type="text" id="newSepSelect" onchange="updateNewSeperator()" placeholder="Leave empty for 'NewLine'"></input>
+            </div>
+
+            <div>
+                <span>Add a space?</span>
+                <input type="checkbox" id="addSpace" value="addSpace">
             </div>
 
             <div>

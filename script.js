@@ -1,33 +1,46 @@
 const copyBtn = document.getElementById('copyBtn');
 const newListContainer = document.getElementById('newListContainer');
 const input = document.getElementById('inputList');
+const spaceCheckbox = document.getElementById('addSpace');
 let originalSeperator = /\r?\n|\r/g;
-let newSeperator = ', ';
+let newSeperator = ',';
 
 function updateOrgiginalSeperator() {
     let val = document.getElementById('oldSepSelect').value;
-    if (val === "newline") {
+    if (val === "") {
         originalSeperator = /\r?\n|\r/g;
-    } else if (val === "comma") {
-        originalSeperator = /,/g;
-    } else if (val === "period") {
-        originalSeperator = /./g;
+    } else {
+        originalSeperator = new RegExp(escapeRegex(val), 'g');
     }
 }
 
 function updateNewSeperator() {
     let val = document.getElementById('newSepSelect').value;
-    if (val === "newline") {
+    if (val == "") {
         newSeperator = '\n';
-    } else if (val === "comma") {
-        newSeperator = ',';
-    } else if (val === "period") {
-        originalSeperator = '.';
+    } else {
+        newSeperator = val; 
     }
 }
 
+function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function replaceSeperator(str) {
-    return str.replace(originalSeperator, newSeperator);
+    let result = str.replace(originalSeperator, newSeperator);
+    
+    // Add space after each separator if checkbox is checked
+    if (spaceCheckbox.checked && newSeperator !== '\n') {
+        const items = result.split(newSeperator);
+        result = items.join(newSeperator + ' ');
+        
+        if (result.endsWith(' ')) {
+            result = result.slice(0, -1);
+        }
+    }
+    
+    return result;
 }
 
 function convertList() {
