@@ -2,6 +2,7 @@ const copyBtn = document.getElementById('copyBtn');
 const newListContainer = document.getElementById('newListContainer');
 const input = document.getElementById('inputList');
 const spaceCheckbox = document.getElementById('addSpace');
+const newLineCheckbox = document.getElementById('addNewLine');
 let originalSeperator = /\r?\n|\r/g;
 let newSeperator = ',';
 
@@ -27,15 +28,44 @@ function escapeRegex(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-function replaceSeperator(str) {
-    let result = str.replace(originalSeperator, newSeperator);
+function cleanWhitespace(str, separator) {
+    // Split by the separator while preserving empty items (for leading/trailing separators)
+    let items = str.split(separator);
     
-    // Add space after each separator if checkbox is checked
-    if (spaceCheckbox.checked && newSeperator !== '\n') {
+    // Trim whitespace from each item
+    items = items.map(item => item.trim());
+    items = items.filter(item => item !== '');
+    
+    return items;
+}
+
+function replaceSeperator(str) {
+    let result = str.trim();
+
+    result = result.replace(originalSeperator, newSeperator);
+
+    const tempSeparator = newSeperator === '\n' ? '\n' : newSeperator;
+    const cleanedItems = cleanWhitespace(result, tempSeparator);
+    
+    result = cleanedItems.join(newSeperator);
+    
+    // Handle space formatting
+    if (spaceCheckbox.checked && newSeperator !== '\n' && newSeperator !== '') {
         const items = result.split(newSeperator);
         result = items.join(newSeperator + ' ');
         
+        // Remove trailing space if it exists
         if (result.endsWith(' ')) {
+            result = result.slice(0, -1);
+        }
+    }
+    
+    if (newLineCheckbox.checked && newSeperator !== '\n') {
+        const items = result.split(newSeperator);
+        result = items.join(newSeperator + '\n');
+        
+        // Remove trailing newline if it exists
+        if (result.endsWith('\n')) {
             result = result.slice(0, -1);
         }
     }

@@ -110,6 +110,8 @@ h1 {
 }
 
 .list-output, .list-input {
+    white-space: pre-wrap;    /* Preserves whitespace and newlines, wraps text */
+    word-wrap: break-word;
     background: #010a12;
     border-radius: 1.2rem;
     padding: 1.2rem;
@@ -164,4 +166,8 @@ span {
 
 option, input {
     color: #010a12;
+}
+
+textarea {
+    resize: none;
 }
