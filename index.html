@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+    <h1>Seperate a List</h1>
+    <div class="sub">Paste a list, set a seperator to go by, and put in a new one to convert formating quickly</div>
+
+    <div class="interactables">
+        <div class="options">
+            <div>
+                <span>What to replace:</span>
+                <select id="oldSepSelect" onchange="updateOrgiginalSeperator()">
+                    <option value="newline">New Line</option>
+                    <option value="comma">,</option>
+                    <option value="period">.</option>
+                </select>
+            </div>
+        
+            <div>
+                <span>What to replace with:</span>
+                <select id="newSepSelect" onchange="updateNewSeperator()">
+                    <option value="newline">New Line</option>
+                    <option value="comma">,</option>
+                    <option value="period">.</option>
+                </select>
+            </div>
+
+            <div>
+                <button onclick="convertList()">Convert!</button>
+            </div>
+        </div>
+
+        <textarea id="inputList" class="list-input" placeholder="Paste your list here..." rows="5"></textarea>
+    </div>
+
+    <div class="result-area">
+        <div class="label">
+            <span>Edited List</span><br><br>
+            <button id="copyBtn" title="Copy to clipboard">📋 COPY LIST</button>
+        </div>
+        <div id="newListContainer" class="list-output">
+            <!-- container for the list -->
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
